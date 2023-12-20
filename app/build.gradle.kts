@@ -113,4 +113,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    // facebook share
+    implementation("com.facebook.android:facebook-share:16.0.0")
+
 }

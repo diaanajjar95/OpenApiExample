@@ -12,18 +12,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.openapiexample.R
 import com.example.openapiexample.data.models.PostEntity
 
 @Composable
@@ -31,6 +35,7 @@ fun PostListItem(
     modifier: Modifier = Modifier,
     post: PostEntity,
     onItemClick: (postId: Int) -> Unit,
+    onShareClick: (post: PostEntity) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -56,6 +61,19 @@ fun PostListItem(
                     .clip(RoundedCornerShape(10.dp)),
             ) {
                 SplashAnimatedLogo()
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(CircleShape)
+                        .background(color = Color.Black)
+                        .padding(4.dp)
+                        .clickable {
+                            onShareClick.invoke(post)
+                        },
+                    painter = painterResource(id = R.drawable.ic_share),
+                    contentDescription = null,
+                    tint = Color.White
+                )
             }
 
             Spacer(modifier = Modifier.size(16.dp))
@@ -84,10 +102,8 @@ fun PostListItem(
                 )
             }
         }
-
     }
 }
-
 
 @Preview
 @Composable
@@ -99,7 +115,5 @@ fun PostListItemPreview() {
         userId = 10,
         postId = 11
     )
-    PostListItem(post = post) {
-
-    }
+    PostListItem(post = post, onItemClick = {}, onShareClick = {})
 }

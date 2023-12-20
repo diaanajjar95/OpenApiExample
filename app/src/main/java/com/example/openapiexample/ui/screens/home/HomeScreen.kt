@@ -2,7 +2,6 @@ package com.example.openapiexample.ui.screens.home
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.openapiexample.ui.screens.component.PostListItem
-import com.example.openapiexample.ui.screens.component.ProgressLoading
 
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
@@ -33,29 +31,24 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
     val context = LocalContext.current
 
-    uiState.message?.let {
-        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-    }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            Spacer(modifier = Modifier.size(4.dp))
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .navigationBarsPadding(), content = {
-                    items(uiState.postsList) {
-                        PostListItem(post = it) { postId ->
-                            Toast.makeText(context, "postId : $postId", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                })
-        }
-        ProgressLoading(isShow = uiState.isLoading)
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Spacer(modifier = Modifier.size(4.dp))
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .navigationBarsPadding(), content = {
+                items(uiState.postsList) {
+                    PostListItem(post = it, onItemClick = { postId ->
+                        Toast.makeText(context, "postId : $postId", Toast.LENGTH_SHORT).show()
+                    }, onShareClick = { post ->
+                        viewModel.facebookLinkShare(url = "https://www.linkedin.com/in/dia-a-najjar-b13b0816b/")
+                    })
+                }
+            })
     }
 }
 
