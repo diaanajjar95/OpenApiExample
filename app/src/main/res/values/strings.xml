@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">OpenApiExample</string>
+    <string name="offline_mode_message">No Internet Connection (Offline Mode On)</string>
+</resources>
